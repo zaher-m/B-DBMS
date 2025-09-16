@@ -17,3 +17,56 @@ The CLI menu provides the following options:
 When connected to a database, a sub-menu allows table-level operations (create table, list tables, insert record, query data, delete table, etc).
 
 ---
+
+
+## Project Decomposition
+
+The project is broken into **5 components** for modularity and clarity. Each component is responsible for specific functionality, implemented as separate Bash scripts or functions that interact through function calls and file system operations.
+
+1. **Main CLI**: Provides the menu interface and orchestrates all operations.
+2. **Database Management**: Handles creation, listing, and deletion of databases.
+3. **Data Storage**: Manages the physical storage of databases and tables on disk.
+4. **Table and Record Operations**: Manages tables and records within a selected database (sub-menu operations).
+5. **Query**: For retrieving data from tables with basic filtering.
+
+
+### Component Structure
+
+The Main CLI is the entry point (orchestrator) that calling other modules. Modules interact with the file system via the Data Storage Module.
+
+```plaintext
++-------------------+
+|   Main CLI Module |
+|   (dbms.sh)       |
+|   Menu Loop       |
+|   Parses Input    |
++-------------------+
+         |
+         | Calls Functions
+         v
++-----------------------------------+
+| Database Management Module        |
+| - Create Database                 |
+| - List Databases                  |
+| - Drop Database                   |
+| - Connect to Database (Sub-menu)  |
++-----------------------------------+
+         |                          |
+         | Uses                     | Connects to Sub-menu
+         v                          v
++-------------------+       +-------------------+
+| Data Storage      |       | Table & Record    |
+| Module            |<----->| Operations Module |
+| - File I/O        |       | - Create Table    |
+| - Directory Mgmt  |       | - Insert/Update   |
+| - CSV Parsing     |       | - Delete Record   |
++-------------------+       +-------------------+
+                            | Uses
+                            v
+                           +-------------------+
+                           | Query Module      |
+                           | - Select All      |
+                           | - Select Where    |
+                           | - Format Output   |
+                           +-------------------+
+```
