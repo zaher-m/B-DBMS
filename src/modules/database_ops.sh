@@ -14,6 +14,14 @@ create_database(){
     echo "Database $1 created successfully!"
 }   
 
+connect_database(){
+    if [ ! -d "./dbms_databases/$1" ];then
+        echo "$1 database not found!"
+        return
+    fi
+    echo "Connected to $1 database successfully!"
+}
+
 list_databases(){
     db_count=$(ls -d ./dbms_databases/*/ 2>/dev/null | wc -l)    
     if [$db_count -eq 0]; then
@@ -25,3 +33,18 @@ list_databases(){
         basename "$dir"
     done
 }
+
+drop_database(){
+    if [ ! -d "./dbms_databases/$1" ];then
+        echo "Error: database $1 not fount!"
+        return
+    fi
+    read -p "Confirm delete $1? (y/n)" confirm
+    if [ $confirm == "y" ];then
+        rm -rf "./dbms_databases/$1"
+        echo "$1 database removed successfully!"
+        return 1
+    fi
+    return
+}
+
