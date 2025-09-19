@@ -1,6 +1,7 @@
 #!/bin/bash
 source modules/database_ops.sh
 source modules/table_record_ops.sh
+source modules/query_ops.sh
 
 CURRENT_DB=""
 show_main_menu() {
@@ -90,7 +91,8 @@ sub_menu_loop() {
         ;;
       6)
         read -p "Enter table name: " table_name
-        read -p "Enter query (all or field name): " query
+        read -p "Enter query (*  for select all): " query
+        select_all "$CURRENT_DB" "$table_name"
         ;;
       7)
         CURRENT_DB=""
