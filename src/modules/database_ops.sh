@@ -1,6 +1,22 @@
 #!/bin/bash
 source modules/data_storage.sh
 
+: '
+============================================================
+ database_ops.sh
+
+ Provides database-level operations 
+ for the DBMS, built on top of data_storage.sh.
+
+ It handles:
+   - Creating new databases (with name validation)
+   - Connecting to an existing database
+   - Listing all available databases
+   - Dropping databases
+   
+============================================================
+'
+
 create_database(){
     if [ -d "./DATA/$1" ]; then
         echo "Database $1 already exists"

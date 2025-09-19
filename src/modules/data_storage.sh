@@ -1,5 +1,21 @@
 #!/bin/bash
 
+: '
+============================================================
+ data_storage.sh
+
+ Provides low-level file operations for the DBMS.
+ It handles:
+   - Creating and deleting database directories
+   - Writing table headers and appending new records
+   - Updating an entire table file with new content
+   - Deleting table files when dropped
+
+ All data is stored under the ./DATA directory,
+ with each database as a subfolder and each table as a .txt file.
+============================================================
+'
+
 create_directory(){
     mkdir -p "DATA/$1"
 }

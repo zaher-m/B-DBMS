@@ -1,6 +1,22 @@
 #!/bin/bash
 source modules/data_storage.sh
 
+: '
+============================================================
+ table_ops.sh
+
+ Provides higher-level table operations for the DBMS.
+ Built on top of `data_storage.sh`.
+
+ It handles:
+   - Creating and dropping tables
+   - Inserting new records into tables
+   - Updating existing records by ID
+   - Deleting records by ID
+   
+============================================================
+'
+
 create_table(){
     if [ -f "./DATA/$1/$2.txt" ]; then
         echo "$2 Table already exists!"

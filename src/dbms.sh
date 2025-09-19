@@ -3,6 +3,26 @@ source modules/database_ops.sh
 source modules/table_ops.sh
 source modules/query_ops.sh
 
+: '
+============================================================
+ dbms.sh
+
+ This is the main entry point for the shell-based DBMS.
+ It serves as the user interface and orchestrator,
+ connecting database, table, and query operations.
+
+ It:
+   - Displays main menu for database management
+     (create, list, connect, drop, exit)
+   - Provides sub-menu for connected database:
+       • Create / Drop tables
+       • Insert, Update, Delete records
+       • Query tables (select all)
+   - Maintains CURRENT_DB to track active session
+
+============================================================
+'
+
 CURRENT_DB=""
 show_main_menu() {
   echo "DBMS Menu:"
@@ -73,6 +93,7 @@ sub_menu_loop() {
       2)
         read -p "Enter table name: " table_name
         drop_table "$1" "$2"
+        ;;
       3)
         read -p "Enter table name: " table_name
         read -p "Enter values: " values
@@ -104,3 +125,5 @@ sub_menu_loop() {
     esac
   done
 }
+
+main_loop
