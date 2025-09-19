@@ -1,9 +1,11 @@
 #!/bin/bash
 source modules/database_ops.sh
+source modules/table_record_ops.sh
 
 CURRENT_DB=""
 show_main_menu() {
   echo "DBMS Menu:"
+  echo "|||||||||||||||||||||"
   echo "1. Create Database"
   echo "2. List Databases"
   echo "3. Connect to Database"
@@ -12,12 +14,14 @@ show_main_menu() {
 }
 show_sub_menu() {
   echo "Database: $CURRENT_DB"
+  echo "|||||||||||||||||||||"
   echo "1. Create Table"
-  echo "2. Insert Record"
-  echo "3. Update Record"
-  echo "4. Delete Record"
-  echo "5. Query Table"
-  echo "6. Back to Main Menu"
+  echo "2. Drop Table"
+  echo "3. Insert Record"
+  echo "4. Update Record"
+  echo "5. Delete Record"
+  echo "6. Query Table"
+  echo "7. Back to Main Menu"
 }
 
 main_loop() {
@@ -62,32 +66,33 @@ sub_menu_loop() {
     case $choice in
       1)
         read -p "Enter table name: " table_name
-        read -p "Enter comma-separated fields(Name,Age, etc): " fields
-        # a table manager creates a table with provided fields
+        read -p "Enter comma-separated fields (ID(PK),Name,Age,etc): " fields
+        create_table "$CURRENT_DB" "$table_name" "$fields"
         ;;
       2)
         read -p "Enter table name: " table_name
-        read -p "Enter values: " values
-        # a table manager inserts record to selected table
-        ;;
+        drop_table "$1" "$2"
       3)
         read -p "Enter table name: " table_name
-        read -p "Enter ID to update: " id
-        # identifier required to select specific record!!
-        read -p "Enter new values (comma-separated): " values
-        # a table manager updates selected table with provided values
+        read -p "Enter values: " values
+        insert_record "$CURRENT_DB" "$table_name" "$values"
         ;;
       4)
         read -p "Enter table name: " table_name
-        read -p "Enter ID to delete: " id
-        # a table manager delets selected record in selected table
+        read -p "Enter ID to update: " id
+        read -p "Enter new values (comma-separated): " values
+        update_record "$CURRENT_DB" "$table_name" "$id" "$values"
         ;;
       5)
         read -p "Enter table name: " table_name
-        read -p "Enter query (all or field name): " query
-        # a query module query selected table with selected query
+        read -p "Enter ID to delete: " id
+        delete_record "$CURRENT_DB" "$table_name" "$id"
         ;;
       6)
+        read -p "Enter table name: " table_name
+        read -p "Enter query (all or field name): " query
+        ;;
+      7)
         CURRENT_DB=""
         return
         ;;
