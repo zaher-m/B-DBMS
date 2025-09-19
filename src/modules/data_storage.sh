@@ -18,7 +18,7 @@ append_record(){
 }
 
 update_file() {
-  echo "$" > "./dbms_databases/$1/$2.txt"  
+  echo "$3" > "./dbms_databases/$1/$2.txt"  
 }
 
 delete_file(){

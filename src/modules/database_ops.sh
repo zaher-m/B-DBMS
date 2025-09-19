@@ -1,15 +1,16 @@
+#!/bin/bash
+source modules/data_storage.sh
+
 create_database(){
     if [ -d "./dbms_databases/$1" ]; then
         echo "Database $1 already exists"
         return 1
     fi
-
     # if non alphanumeric 
-    if [ ]; then
+    if [[ ! $1 =~ ^[a-zA-Z0-9]+$ ]]; then
         echo "Invalid database name!"
         return 1
     fi 
-
     create_directory "$1"
     echo "Database $1 created successfully!"
 }   
@@ -23,8 +24,8 @@ connect_database(){
 }
 
 list_databases(){
-    db_count=$(ls -d ./dbms_databases/*/ 2>/dev/null | wc -l)    
-    if [$db_count -eq 0]; then
+    local db_count=$(ls -d ./dbms_databases/*/ 2>/dev/null | wc -l)    
+    if [ $db_count -eq 0 ]; then
         echo "No databases found!"
         return 
     fi
@@ -41,7 +42,7 @@ drop_database(){
     fi
     read -p "Confirm delete $1? (y/n)" confirm
     if [ $confirm == "y" ];then
-        rm -rf "./dbms_databases/$1"
+        delete_directory "$1"
         echo "$1 database removed successfully!"
         return 1
     fi

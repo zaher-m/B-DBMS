@@ -1,3 +1,5 @@
+#!/bin/bash
+source modules/database_ops.sh
 
 CURRENT_DB=""
 show_main_menu() {
@@ -17,8 +19,6 @@ show_sub_menu() {
   echo "5. Query Table"
   echo "6. Back to Main Menu"
 }
-
-
 
 main_loop() {
   while true; do
