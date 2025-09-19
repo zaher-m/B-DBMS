@@ -26,10 +26,6 @@ create_table(){
         echo -e "\n Invalid name for a table \n"
         return 1
     fi
-    echo "1 -> $1"
-    echo "1 -> $2"
-    echo "1 -> $3"
-    echo
     write_header "$1" "$2" "$3"
     echo -e "\n Table $2 created successfully! \n"
 }
