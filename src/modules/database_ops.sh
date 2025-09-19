@@ -34,32 +34,35 @@ create_database(){
 connect_database(){
     if [ ! -d "./DATA/$1" ];then
         echo "$1 database not found!"
-        return
+        return 0
     fi
     echo "Connected to $1 database successfully!"
+    return 1
 }
 
 list_databases(){
     local db_count=$(ls -d ./DATA/*/ 2>/dev/null | wc -l)    
     if [ $db_count -eq 0 ]; then
-        echo "No databases found!"
+        echo -e "\n No databases found!\n"
         return 
     fi
+    echo -e "\n==> DATABASES <==\n"
     ls -d ./DATA/*/ 2>/dev/null | while read dir; do
         # strips the leading directory path, leaving only the last part.
         basename "$dir"
     done
+    echo "<===============>"
 }
 
 drop_database(){
     if [ ! -d "./DATA/$1" ];then
-        echo "Error: database $1 not fount!"
+        echo -e "\n Error: database $1 not fount!\n"
         return
     fi
     read -p "Confirm delete $1? (y/n)" confirm
     if [ $confirm == "y" ];then
         delete_directory "$1"
-        echo "$1 database removed successfully!"
+        echo -e "\n $1 database removed successfully!\n"
         return 1
     fi
     return

@@ -19,27 +19,31 @@ source modules/data_storage.sh
 
 create_table(){
     if [ -f "./DATA/$1/$2.txt" ]; then
-        echo "$2 Table already exists!"
+        echo -e "\n $2 Table already exists! \n"
         return 1
     fi
     if [[ ! $2 =~ ^[a-zA-Z0-9]+$ ]]; then
-        echo "Invalid name for a table"
+        echo -e "\n Invalid name for a table \n"
         return 1
     fi
+    echo "1 -> $1"
+    echo "1 -> $2"
+    echo "1 -> $3"
+    echo
     write_header "$1" "$2" "$3"
-    echo "Table $2 created successfully!"
+    echo -e "\n Table $2 created successfully! \n"
 }
 
 drop_table() {
     if [ ! -f "./DATA/$1/$2.txt" ]; then
-        echo "Table: $2 not found in database: $1"
+        echo -e "\n Table: $2 not found in database: $1 \n"
         return 1
     fi
     delete_file "$1" "$2"
     if [ $? -eq 0 ]; then
-        echo "Table $2 dropped successfully"
+        echo -e "\n Table $2 dropped successfully \n"
     else
-        echo "Failed to drop table $$2"
+        echo -e "\n Failed to drop table $$2 \n"
         return 1
     fi
 }
@@ -49,7 +53,7 @@ insert_record(){
     local table_name="$2"
     local values="$3"
     if [ ! -f "./DATA/$1/$2.txt" ]; then
-        echo "Table $2 not found"
+        echo -e "\n Table $2 not found \n"
         return 1
     fi
     append_record "$db_name" "$table_name" "$values"
@@ -63,25 +67,25 @@ update_record(){
     local id="$3"
     local values="$4"
     if [ ! -f "./DATA/$1/$2.txt" ]; then
-        echo "Table $2 not found"
+        echo -e "\n Table $2 not found \n"
         return 1
     fi
     local found=0
     local new_content=""
     while IFS=',' read -r record_id rest; do
         if [ "$record_id" = "$id" ]; then
-            new_content+="$id,$new_values\n"
+            new_content+="$id,$values"$'\n'
             found=1
         else
-            new_content+="$record_id,$rest\n"
+            new_content+="$record_id,$rest"$'\n'
         fi
     done < "./DATA/$1/$2.txt"
     if [ $found -eq 0 ]; then
-        echo "Didn't find a match with provided id: $id!"
+        echo -e "\n Didn't find a match with provided id: $id! \n"
         return 1
     fi
     update_file "$db_name" "$table_name" "$new_content"
-    echo "Updated successfully with record id: $id!"
+    echo -e "\n Updated successfully with record id: $id! \n"
 }
 
 delete_record() {
@@ -89,22 +93,22 @@ delete_record() {
     local table_name="$2"
     local id="$3"
     if [ ! -f "./DATA/$1/$2.txt" ]; then
-        echo "Table $2 not found"
+        echo -e "\n Table $2 not found \n"
         return 1
     fi
     local found=0
     local new_content=""
     while IFS=',' read -r record_id rest; do
         if [ "$record_id" != "$id" ]; then
-            new_content+="$record_id,$rest\n"
+            new_content+="$record_id,$rest"$'\n'
         else
             found=1
         fi
     done < "./DATA/$1/$2.txt"
     if [ $found -eq 0 ]; then
-        echo "Record ID $id not found"
+        echo -e "\n Record ID $id not found \n"
         return 1
     fi
     update_file "$db_name" "$table_name" "$new_content"
-    echo "Deleted successfully with record ID: $id!"
+    echo -e "\n Deleted successfully with record ID: $id! \n"
 }

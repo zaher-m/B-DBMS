@@ -25,8 +25,10 @@ source modules/query_ops.sh
 
 CURRENT_DB=""
 show_main_menu() {
-  echo "DBMS Menu:"
+  echo
+  echo "DBMS MENU"
   echo "|||||||||||||||||||||"
+  echo
   echo "1. Create Database"
   echo "2. List Databases"
   echo "3. Connect to Database"
@@ -34,8 +36,10 @@ show_main_menu() {
   echo "5. Exit"
 }
 show_sub_menu() {
+  echo
   echo "Database: $CURRENT_DB"
   echo "|||||||||||||||||||||"
+  echo
   echo "1. Create Table"
   echo "2. Drop Table"
   echo "3. Insert Record"
@@ -53,16 +57,20 @@ main_loop() {
       1)
         read -p "Enter database name: " db_name
         create_database "$db_name"
-        echo "database $db_name created successfully!"
+        echo
+        echo -e "database $db_name created successfully!\n"
         ;;
       2)
         list_databases
         ;;
       3)
         read -p "Enter database name: " db_name
-        CURRENT_DB=$(connect_database "$db_name")
-        if [ $? -eq 0 ]; then
-          sub_menu_loop
+        connect_database "$db_name"
+        if [ $? -eq 1 ]; then   
+            CURRENT_DB=$db_name
+            sub_menu_loop
+        else
+            echo "Connection failed. Returning to main menu..."
         fi
         ;;
       4)
@@ -88,11 +96,13 @@ sub_menu_loop() {
       1)
         read -p "Enter table name: " table_name
         read -p "Enter comma-separated fields (ID(PK),Name,Age,etc): " fields
+        echo "current database: $CURRENT_DB"
+        echo
         create_table "$CURRENT_DB" "$table_name" "$fields"
         ;;
       2)
         read -p "Enter table name: " table_name
-        drop_table "$1" "$2"
+        drop_table "$CURRENT_DB" "$table_name"
         ;;
       3)
         read -p "Enter table name: " table_name
