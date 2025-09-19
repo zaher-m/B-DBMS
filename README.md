@@ -76,11 +76,11 @@ The Main CLI is the entry point (orchestrator) that calling other modules. Modul
 
 ```plaintext
 dbms_project/
-├── dbms.sh                   # Main CLI script
+├── dbms.sh                   # Entry-point script
 ├── modules/
 │   ├── data_storage.sh       # Data storage module
 │   ├── database_ops.sh       # Database management module
-│   ├── table_ops.sh   # Table and record operations module
+│   ├── table_ops.sh          # Table and record operations module
 │   ├── query_ops.sh          # Query module
-└── DATA/           # Database storage directory
+└── DATA/                     # Database storage directory
 ```
