@@ -1,6 +1,6 @@
 #!/bin/bash
 source modules/database_ops.sh
-source modules/table_record_ops.sh
+source modules/table_ops.sh
 source modules/query_ops.sh
 
 CURRENT_DB=""

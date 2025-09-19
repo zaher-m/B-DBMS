@@ -80,7 +80,7 @@ dbms_project/
 ├── modules/
 │   ├── data_storage.sh       # Data storage module
 │   ├── database_ops.sh       # Database management module
-│   ├── table_record_ops.sh   # Table and record operations module
+│   ├── table_ops.sh   # Table and record operations module
 │   ├── query_ops.sh          # Query module
 └── DATA/           # Database storage directory
 ```
