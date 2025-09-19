@@ -32,22 +32,22 @@ main_loop() {
     case $choice in
       1)
         read -p "Enter database name: " db_name
-        # a database manager creates a database with the provided name
-        echo "database $db_name created!"
+        create_database "$db_name"
+        echo "database $db_name created successfully!"
         ;;
       2)
-        # a database manager lists all available databases
+        list_databases
         ;;
       3)
         read -p "Enter database name: " db_name
-        # a database manager connects to the provided database name 
-        # set the CURRENT_DB=db_name
-        # show sub menu
-        sub_menu_loop
+        CURRENT_DB=$(connect_database "$db_name")
+        if [ $? -eq 0 ]; then
+          sub_menu_loop
+        fi
         ;;
       4)
         read -p "Enter database name: " db_name
-        # a database manager deletes the specified database
+        drop_database "$db_name"
         ;;
       5)
         echo "Exiting"

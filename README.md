@@ -9,6 +9,7 @@ This project develops a lightweight, file-based **Database Management System (DB
 ## Project Features (Main Menu)
 
 The CLI menu provides the following options:
+
 1. **Create Database**: Create a new database.
 2. **List Databases**: Display all available databases.
 3. **Connect to Databases**: Select/use a specific database.
@@ -17,7 +18,6 @@ The CLI menu provides the following options:
 When connected to a database, a sub-menu allows table-level operations (create table, list tables, insert record, query data, delete table, etc).
 
 ---
-
 
 ## Project Decomposition
 
@@ -28,7 +28,6 @@ The project is broken into **5 components** for modularity and clarity. Each com
 3. **Data Storage**: Manages the physical storage of databases and tables on disk.
 4. **Table and Record Operations**: Manages tables and records within a selected database (sub-menu operations).
 5. **Query**: For retrieving data from tables with basic filtering.
-
 
 ### Component Structure
 
@@ -70,9 +69,11 @@ The Main CLI is the entry point (orchestrator) that calling other modules. Modul
                            | - Format Output   |
                            +-------------------+
 ```
+
 ---
 
 ## Directory Structure
+
 ```plaintext
 dbms_project/
 ├── dbms.sh                   # Main CLI script
@@ -81,5 +82,5 @@ dbms_project/
 │   ├── database_ops.sh       # Database management module
 │   ├── table_record_ops.sh   # Table and record operations module
 │   ├── query_ops.sh          # Query module
-└── dbms_databases/           # Database storage directory
+└── DATA/           # Database storage directory
 ```

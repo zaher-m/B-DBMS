@@ -2,7 +2,7 @@
 source modules/data_storage.sh
 
 create_database(){
-    if [ -d "./dbms_databases/$1" ]; then
+    if [ -d "./DATA/$1" ]; then
         echo "Database $1 already exists"
         return 1
     fi
@@ -16,7 +16,7 @@ create_database(){
 }   
 
 connect_database(){
-    if [ ! -d "./dbms_databases/$1" ];then
+    if [ ! -d "./DATA/$1" ];then
         echo "$1 database not found!"
         return
     fi
@@ -24,19 +24,19 @@ connect_database(){
 }
 
 list_databases(){
-    local db_count=$(ls -d ./dbms_databases/*/ 2>/dev/null | wc -l)    
+    local db_count=$(ls -d ./DATA/*/ 2>/dev/null | wc -l)    
     if [ $db_count -eq 0 ]; then
         echo "No databases found!"
         return 
     fi
-    ls -d ./dbms_databases/*/ 2>/dev/null | while read dir; do
+    ls -d ./DATA/*/ 2>/dev/null | while read dir; do
         # strips the leading directory path, leaving only the last part.
         basename "$dir"
     done
 }
 
 drop_database(){
-    if [ ! -d "./dbms_databases/$1" ];then
+    if [ ! -d "./DATA/$1" ];then
         echo "Error: database $1 not fount!"
         return
     fi

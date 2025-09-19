@@ -2,7 +2,7 @@
 source modules/data_storage.sh
 
 create_table(){
-    if [ -f "./dbms_databases/$1/$2.txt" ]; then
+    if [ -f "./DATA/$1/$2.txt" ]; then
         echo "$2 Table already exists!"
         return 1
     fi
@@ -15,7 +15,7 @@ create_table(){
 }
 
 drop_table() {
-    if [ ! -f "./dbms_databases/$1/$2.txt" ]; then
+    if [ ! -f "./DATA/$1/$2.txt" ]; then
         echo "Table: $2 not found in database: $1"
         return 1
     fi
@@ -32,7 +32,7 @@ insert_record(){
     local db_name="$1"
     local table_name="$2"
     local values="$3"
-    if [ ! -f "./dbms_databases/$1/$2.txt" ]; then
+    if [ ! -f "./DATA/$1/$2.txt" ]; then
         echo "Table $2 not found"
         return 1
     fi
@@ -46,7 +46,7 @@ update_record(){
     local table_name="$2"
     local id="$3"
     local values="$4"
-    if [ ! -f "./dbms_databases/$1/$2.txt" ]; then
+    if [ ! -f "./DATA/$1/$2.txt" ]; then
         echo "Table $2 not found"
         return 1
     fi
@@ -59,7 +59,7 @@ update_record(){
         else
             new_content+="$record_id,$rest\n"
         fi
-    done < "./dbms_databases/$1/$2.txt"
+    done < "./DATA/$1/$2.txt"
     if [ $found -eq 0 ]; then
         echo "Didn't find a match with provided id: $id!"
         return 1
@@ -72,7 +72,7 @@ delete_record() {
     local db_name="$1"
     local table_name="$2"
     local id="$3"
-    if [ ! -f "./dbms_databases/$1/$2.txt" ]; then
+    if [ ! -f "./DATA/$1/$2.txt" ]; then
         echo "Table $2 not found"
         return 1
     fi
@@ -84,7 +84,7 @@ delete_record() {
         else
             found=1
         fi
-    done < "./dbms_databases/$1/$2.txt"
+    done < "./DATA/$1/$2.txt"
     if [ $found -eq 0 ]; then
         echo "Record ID $id not found"
         return 1
